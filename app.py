@@ -20,13 +20,16 @@ def launch():
 
 
 @ask.intent('WhereIntent', mapping={'venue': 'VENUE'})
-def hello_world(venue):
+def where(venue):
+    if venue is None:
+        speech_text = 'Sorry, I did not understand the venue name'
+        return statement(speech_text).simple_card('HelloWorld', speech_text)
 
     coords = lookup_venue(venue)
-    if None:
+    if coords is None:
         speech_text = 'Sorry, I could not find that'
         return statement(speech_text).simple_card('HelloWorld', speech_text)
-    
+
     venues = explore(coords['lat'], coords['lng'])
     number_of_venues = len(venues)
     top_hit = venues[0] if number_of_venues > 0 else None
