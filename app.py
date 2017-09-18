@@ -21,6 +21,8 @@ def launch():
 
 @ask.intent('WhereIntent', mapping={'venue': 'VENUE'})
 def where(venue):
+    print '*'*50
+    print venue
     if venue is None:
         speech_text = 'Sorry, I did not understand the venue name'
         return statement(speech_text).simple_card('HelloWorld', speech_text)
