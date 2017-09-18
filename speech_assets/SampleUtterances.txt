@@ -1,7 +1,6 @@
+WhereIntent Where is {slot value|VENUE}
 WhereIntent Where can I find {slot value|VENUE}
 WhereIntent What is close to {slot value|VENUE}
 WhereIntent What's close to {slot value|VENUE}
 WhereIntent What is nearby {slot value|VENUE}
 WhereIntent What's nearby {slot value|VENUE}
-WhereIntent Where is {slot value|VENUE}
-WhereIntent Where the {slot value|VENUE} is 
