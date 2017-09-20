@@ -68,6 +68,9 @@ def help():
 def session_ended():
     return "{}", 200
 
+@app.route('/status')
+def status_check():
+    return 'Everything is operational'
 
 if __name__ == '__main__':
     # load environment variables
