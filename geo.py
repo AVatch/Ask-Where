@@ -76,7 +76,8 @@ def explore(lat, lng):
     payload = {
         'key': os.environ.get('GOOGLE_KEY'),
         'location': '{0},{1}'.format(str(lat), str(lng)),
-        'radius': 500
+        'radius': 500,
+        'keyword': 'Landmarks'
     }
 
     res = requests.get(
