@@ -21,25 +21,30 @@ def launch():
 
 @ask.intent('WhereIntent', mapping={'venue': 'VENUE'})
 def where(venue):
-    print '*'*50
-    print venue
     if venue is None:
-        speech_text = 'Sorry, I did not understand the venue name'
-        return statement(speech_text).simple_card('HelloWorld', speech_text)
+        speech_text = 'Sorry, I did not understand the name of the place'
+        return statement(speech_text).simple_card('LandMark', speech_text)
 
     coords = lookup_venue(venue)
     if coords is None:
-        speech_text = 'Sorry, I could not find that'
-        return statement(speech_text).simple_card('HelloWorld', speech_text)
+        speech_text = 'Sorry, I could not find that place'
+        return statement(speech_text).simple_card('LandMark', speech_text)
 
     venues = explore(coords['lat'], coords['lng'])
     number_of_venues = len(venues)
-    top_hit = venues[0] if number_of_venues > 0 else None
+    # top_hit = venues[0] if number_of_venues > 0 else None
+
+    top_hit = None
+
+    for obj in venues:
+        if venue.lower().replace(' ','_') != obj.get('name', '').lower().replace(' ','_'):
+            top_hit = obj
+            break
 
     if top_hit is None:
-        speech_text = 'Sorry, I could not find that'
-        return statement(speech_text).simple_card('HelloWorld', speech_text)
-    
+        speech_text = 'Sorry, I could not find that place'
+        return statement(speech_text).simple_card('LandMark', speech_text)
+
     venue_details = details(top_hit['place_id'])
     venue_locality = get_locality(venue_details)
 
@@ -50,13 +55,13 @@ def where(venue):
     if venue_locality is not None:
         speech_text += ' in {0}'.format(venue_locality)
 
-    return statement(speech_text).simple_card('HelloWorld', speech_text)
+    return statement(speech_text).simple_card('LandMark', speech_text)
 
 
 @ask.intent('AMAZON.HelpIntent')
 def help():
-    speech_text = 'You can say hello to me!'
-    return question(speech_text).reprompt(speech_text).simple_card('HelloWorld', speech_text)
+    speech_text = 'Just ask me where a place is, and I will do my best to tell you what is nearby.'
+    return question(speech_text).reprompt(speech_text).simple_card('LandMark', speech_text)
 
 
 @ask.session_ended
