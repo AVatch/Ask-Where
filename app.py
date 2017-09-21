@@ -3,7 +3,7 @@ import os
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_ask import Ask, request, session, question, statement
 from geo import lookup_venue, explore, details, get_locality
 
@@ -67,6 +67,10 @@ def help():
 @ask.session_ended
 def session_ended():
     return "{}", 200
+
+@app.route('/')
+def index():
+    return render_template('index.html', name="lamdmark")
 
 @app.route('/status')
 def status_check():
